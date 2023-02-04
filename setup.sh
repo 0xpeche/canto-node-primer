@@ -19,8 +19,13 @@ RPC_PORT="26657"
 
 # Updates system and installs dependencies
 sudo apt-get -y update && sudo apt-get -y upgrade
-sudo snap install go --classic && sudo apt-get install -y git gcc make jq
-go install github.com/cosmos/cosmos-sdk/cosmovisor/cmd/cosmovisor@v1.0.0
+sudo apt-get install -y git gcc make jq
+curl -LO https://go.dev/dl/go1.20.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.20.linux-amd64.tar.gz
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+source ~/.bashrc
 
 cd /$HOME/
 git clone https://github.com/Canto-Network/Canto.git
@@ -69,4 +74,4 @@ mkdir -p $HOME/.cantod/cosmovisor/upgrades
 ln -s /usr/bin/cantod $HOME/.cantod/cosmovisor/genesis/bin/cantod
 
 sudo service canto stop
-sudo service canto start
+sudo systemctl start canto && journalctl -u canto -f
