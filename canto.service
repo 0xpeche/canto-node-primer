@@ -3,7 +3,7 @@ Description="Canto Node"
 After=network-online.target
 
 [Service]
-User=USER
+User=root
 ExecStart=/root/go/bin/cantod start
 Restart=always
 RestartSec=3
